@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A2B0829B-412A-4B13-969D-198949F4F468}">
+	<Platforms>
+		<Platform Name="Win32"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" OutputDirectory="$(SolutionDir)$(ConfigurationName)" IntermediateDirectory="$(SolutionDir)\build">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" OutputDirectory="$(SolutionDir)$(ConfigurationName)" IntermediateDirectory="$(SolutionDir)\build">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd">
+		<File RelativePath=".\com1d.h"/>
+		<File RelativePath=".\comage.h"/>
+		<File RelativePath=".\comatm.h"/>
+		<File RelativePath=".\combcs.h"/>
+		<File RelativePath=".\combgc.h"/>
+		<File RelativePath=".\comdiag.h"/>
+		<File RelativePath=".\comhyd.h"/>
+		<File RelativePath=".\commac.h"/>
+		<File RelativePath=".\compar.h"/>
+		<File RelativePath=".\compft.h"/>
+		<File RelativePath=".\comsat.h"/>
+		<File RelativePath=".\comsno.h"/>
+		<File RelativePath=".\comsoi.h"/>
+		<File RelativePath=".\comsum.h"/>
+		<File RelativePath=".\comtex.h"/>
+		<File RelativePath=".\comveg.h"/>
+		<File RelativePath=".\comwork.h"/>
+		<File RelativePath=".\implicit.h"/>
+		<File RelativePath=".\soilbgc.h"/></Filter>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath=".\biogeochem.f"/>
+		<File RelativePath=".\Callocation.f"/>
+		<File RelativePath=".\canopy.f"/>
+		<File RelativePath=".\climate.f"/>
+		<File RelativePath=".\ConstVars.f"/>
+		<File RelativePath=".\initial.f"/>
+		<File RelativePath=".\main.f"/>
+		<File RelativePath=".\math.f"/>
+		<File RelativePath=".\physiology_B.f"/>
+		<File RelativePath=".\physiology_C3.f"/>
+		<File RelativePath=".\physiology_C4.f"/>
+		<File RelativePath=".\physiology_N.f"/>
+		<File RelativePath=".\physiology_S.f"/>
+		<File RelativePath=".\radiation.f"/>
+		<File RelativePath=".\scaler.f"/>
+		<File RelativePath=".\snow.f"/>
+		<File RelativePath=".\soil.f"/>
+		<File RelativePath=".\stats.f"/>
+		<File RelativePath=".\utilities.f"/>
+		<File RelativePath=".\vegetation.f"/>
+		<File RelativePath=".\weather.f"/></Filter></Files>
+	<Globals/></VisualStudioProject>
