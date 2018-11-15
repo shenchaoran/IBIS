@@ -119,7 +119,7 @@ c c4 grass physiology
 c ---------------------------------------------------------------------
 c
 c vmax and dark respiration for current conditions
-cc	  write(100,*)"C4 1"
+	  write(100,*)"C4 1"
  	  vmaxl4 = 15.0e-06
 cc        vmaxl4 = vmaxl4 * 2  !yuan
 
@@ -151,7 +151,7 @@ c
 c
         jp = min (dumq/duma, dumc/dumq)
 
-cc	  write(100,*)"C4 2"
+	  write(100,*)"C4 2"
 c
 c 'carbon dioxide limited' rate of photosynthesis (mol/m**2/s)
 c
@@ -170,7 +170,7 @@ c calculate the net photosynthesis rate (mol/m**2/s)
 c
         agl4 = min (dumq/duma, dumc/dumq)
         anl4 = agl4 - rdarkl4
-cc	  write(100,*)"C4 3", gbco2l,csl4
+	  write(100,*)"C4 3", gbco2l,csl4
 c
 c calculate co2 concentrations and stomatal condutance values
 c using simple iterative procedure
@@ -192,7 +192,7 @@ c
      >                   coefbl4 * stresstl)
 c
         gsl4 = max (gsl4min, coefbl4 * stresstl, gsl4)
-cc	  write(100,*)"C4 4"
+	  write(100,*)"C4 4"
 c
 c calculate new value of ci using implicit scheme
 c
@@ -214,7 +214,7 @@ c CD: For numerical stability (to avoid division by zero in gscl4),
 c cscl4 is limited to 1e-8 mol_co2/mol_air.
 c
         cscl4 = max (1.e-8         , co2conc - ancl4 / gbco2l)
-cc	  write(100,*)"C4 5"
+	  write(100,*)"C4 5"
 c
 c calculate canopy average stomatal conductance
 c

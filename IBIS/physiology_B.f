@@ -105,7 +105,7 @@ c
 c upper canopy gamma-star values (mol/mol)
 c
 
-cc        write(100,*)tau, kc15, ko15
+        write(100,*)tau, kc15, ko15
         gamstar = o2conc / (2. * tau)
 c
 c calculate boundary layer parameters (mol/m**2/s) = su / 0.029 * 1.35
@@ -144,7 +144,7 @@ cc        vmaxub = vmaxub * 2  !yuan
 
         vmax  = vmaxub * tempvm * stresstu
 
-cc	  write(110,"(5f10.2)")tleaf, tu, rwork, tempvm, stresstu
+	  write(110,"(5f10.2)")tleaf, tu, rwork, tempvm, stresstu
 
         rdarkub = gammaub * vmaxub * tempvm
 c
@@ -232,8 +232,8 @@ c
         rwork = 1 - fwetu
 
 cc	  if(iyear.eq.2006) then
-cc	     write(120,"(3I6,10f10.6)")iyear,imonth,iday,agcub,agub,scaleu,vmax,je,jc,tempvm, stresstu,
-cc     >                              dumq/duma, dumc/dumq
+	     write(120,"(3I6,10f10.6)")iyear,imonth,iday,agcub,agub,scaleu,vmax,je,jc,tempvm, stresstu,
+     >                              dumq/duma, dumc/dumq
 cc	  end if
 
         agcub = rwork * agcub
@@ -317,7 +317,7 @@ c
  110    continue
 
 cc	    if((iyear.eq.2003).or.(iyear.eq.2008)) then
-cc	       write(110,"(3I6, 5f10.4)")iyear, imonth, iday, stresstl, wsoi(1), wisoi(1), swilt(1), sfield(1)
+	       write(110,"(3I6, 5f10.4)")iyear, imonth, iday, stresstl, wsoi(1), wisoi(1), swilt(1), sfield(1)
 cc	    end if
 
 cc          stresstl = 1

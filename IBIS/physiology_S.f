@@ -86,7 +86,7 @@ c
 c include water vapor functions
 c
 	  
-cc	  write(100,*)"phy 0"
+	  write(100,*)"phy 0"
 
         theta3 = 0.970     ! c3 photosynthesis
 c
@@ -102,7 +102,7 @@ c * * * lower canopy physiology calculations * * *
 c ---------------------------------------------------------------------
 c calculate physiological parameter values which are a function of temperature
 c
-cc        write(100,*)"phy 0.5", tl, tleaf
+        write(100,*)"phy 0.5", tl, tleaf
 
 	  tl = min(max(tl, 253.16), 323.16)
 
@@ -162,7 +162,7 @@ c
         dume = max (dumb**2 - 4. * duma * dumc, 0.)
         dumq = 0.5 * (dumb + sqrt(dume)) + 1.e-15
  
-cc        write(100,*)"phy 1"
+        write(100,*)"phy 1"
 c
 c calculate the net photosynthesis rate (mol/m**2/s)
 c
@@ -200,7 +200,7 @@ c
         agcls = agls * scalel
         ancls = anls * scalel
 
-cc        write(100,*)"phy 2"
+        write(100,*)"phy 2"
 
 c
 c calculate canopy average surface co2 concentration
@@ -228,7 +228,7 @@ c
         agcls = rwork * agcls
         ancls = rwork * ancls
 
-cc        write(100,*)"phy 3"
+        write(100,*)"phy 3"
 
 c
 c return to main program

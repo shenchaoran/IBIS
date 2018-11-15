@@ -91,7 +91,7 @@ c
 
         cil3 = max (1.05 * gamstar, min (cimax, cil3))
 
-cc	  write(100,*)"start physiology"
+	  write(100,*)"start physiology"
 c
 c ---------------------------------------------------------------------
 c c3 grass physiology
@@ -123,7 +123,7 @@ c calculate boundary layer parameters (mol/m**2/s) = su / 0.029 * 1.35
 c
         gbco2l = min (10.0, max (0.1, sl * 25.5))
 
-cc	  write(100,*)"physiology 1"
+	  write(100,*)"physiology 1"
 
 c 
 c calculate the relative humidity in the canopy air space
@@ -161,7 +161,7 @@ c
         dume = max (dumb**2 - 4. * duma * dumc, 0.)
         dumq = 0.5 * (dumb + sqrt(dume)) + 1.e-15
 
-cc	  write(100,*)"physiology 2"
+	  write(100,*)"physiology 2"
 
 c
 c calculate the net photosynthesis rate (mol/m**2/s)
@@ -203,7 +203,7 @@ c
         ancl3 = anl3 * scalel
 
 cc        if((iyear.eq.2003).or.(iyear.eq.2008)) then
-cc       	  write(110,*)iyear, agcl3, scalel, stresstl,vmax 
+       	  write(110,*)iyear, agcl3, scalel, stresstl,vmax 
 cc	  end if
 
 c

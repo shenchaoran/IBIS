@@ -63,13 +63,13 @@ c
 c calculate wind speeds and aerodynamic transfer coeffs
 c
         call turcof (iter)
-cc	  write(100,*)"turcof over", pft
+	  write(100,*)"turcof over", pft
 c
 c calculate canopy photosynthesis rates and conductance
 c
         call scaler(scaleu, scalel) ! Yuan added this
 
-cc        write(100,*)"scaler over", scalel, scaleu, pft
+        write(100,*)"scaler over", scalel, scaleu, pft
 
 	  if ((pft.le.3).or.(pft.eq.5).or.(pft.eq.7)) then            
 	      call stomata_B (iyear,imonth,iday,scaleu)
@@ -91,12 +91,12 @@ cc        write(100,*)"scaler over", scalel, scaleu, pft
 	      call stomata_C4 (scalel)
 	  end if
 
-cc	  write(100,*)"stomata over"
+	  write(100,*)"stomata over"
 c
 c solve implicit system of heat and water balance equations
 c
         call turvap (iter, niter)
-cc	  write(100,*)"turvap over"
+	  write(100,*)"turvap over"
 c
   100 continue
 
@@ -730,7 +730,7 @@ c call impexp2 for snow model
 c
       call impexp2 (wi, ti, tiold, iter)
 
-cc      write(100,*)"turvap 1"
+      write(100,*)"turvap 1"
 c
 c adjust t* for this iteration 
 c
@@ -781,7 +781,7 @@ c
         dqu = dqsat (tu, qu)
         dqu = min (dqu, qu * 0.1)
 
-cc      write(100,*)"turvap 1.4"
+      write(100,*)"turvap 1.4"
 
 c
         e      = esat(ts)
@@ -804,7 +804,7 @@ c
         dqi = dqsat (ti, qi)
         dqi = min (dqi, qi * 0.1)
 
-cc      write(100,*)"turvap 1.5"
+      write(100,*)"turvap 1.5"
 c
 cc 100  continue
 c
@@ -846,11 +846,11 @@ c
 
           psig = -grav * suction(1) * (zwtot ** (-bex(1)))
 
-cc         write(100,*)"turvap 1.6", bex, zwtot, psig, rvap, tg
+         write(100,*)"turvap 1.6", bex, zwtot, psig, rvap, tg
 
           hfac = exp(psig/(rvap*tg))
 
-cc      write(100,*)"turvap 1.7"
+      write(100,*)"turvap 1.7"
 
 c
 c then calculate the relative humidity of the air (relative to
@@ -868,7 +868,7 @@ c
           zwopt = 1.0
           zwdry = swilt(1)
           betaw = max(0.0, min(1., (zwtot - zwdry)/(zwopt - zwdry)) )
-cc      write(100,*)"turvap 2"
+      write(100,*)"turvap 2"
 c
 c Next convert beta_w to beta_s (see Milly 1992, JClim 5 209-226):
 c
@@ -929,7 +929,7 @@ c
         if ((lai(1)+sai(1)).gt.epsilon)
      >     fradl = (soll + firl) /
      >                (2.0 * (lai(1) + sai(1)))
-cc      write(100,*)"turvap 3"
+      write(100,*)"turvap 3"
 c
 cc 110  continue
 c
@@ -1017,7 +1017,7 @@ c
       call const(rhs, nqn, 0.0)
 c
 
-cc      write(100,*)"turvap 4"
+      write(100,*)"turvap 4"
       rwork = 1. / dtime
 c
 c upper leaf temperature tu
@@ -1084,7 +1084,7 @@ c
         rhs(4) = cu*ta*tfac
      >           + (1.-wu)*rwork*tu
      >           + (1.-ws)*rwork2*ts
-cc      write(100,*)"turvap 5"
+      write(100,*)"turvap 5"
 c
 cc 330  continue
 c
@@ -1139,7 +1139,7 @@ c
      >          + rwork2*qgfac *(qg-wg*dqg*tg)
      >          + fi *si    *(qi-wi*dqi*ti)
 
-cc      write(100,*)"turvap 6"
+      write(100,*)"turvap 6"
 c
 cc  360 continue
 c
@@ -1202,7 +1202,7 @@ c
         q12 = vec(6)
         q34 = vec(7)
 
-cc      write(100,*)"turvap 7"
+      write(100,*)"turvap 7"
 c
 cc  400 continue
 c
@@ -1261,7 +1261,7 @@ c
         qsav = qs + ws*dqs*(ts-tspre)
         fvaps = ssw * (qsav-q12)
 
-cc      write(100,*)"turvap 8"
+      write(100,*)"turvap 8"
 c
 c evaporation from wet surfaces in the lower canopy
 c and transpiration per unit leaf area - lower canopy

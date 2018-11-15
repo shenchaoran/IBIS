@@ -141,8 +141,8 @@ c
      >            plai(7) * tempu  +
      >            plai(8) * tempu
 
-cc        write(100,"(10f10.2)")plai(1),plai(2),plai(3),plai(4),plai(5),plai(6),plai(7),plai(8),
-cc     >              dropu, tempu	   
+        write(100,"(10f10.2)")plai(1),plai(2),plai(3),plai(4),plai(5),plai(6),plai(7),plai(8),
+     >              dropu, tempu	   
 c
 c upper canopy fractions
 c
@@ -188,7 +188,7 @@ c
         lai(2) = avglaiu / fu_phys
         lai(2) = avglaiu / fu
         
-cc	  write(100,*)iday,fu,fu_phys,avglaiu,lai(2)
+	  write(100,*)iday,fu,fu_phys,avglaiu,lai(2)
 
 c
 c put a fix on canopy lais to avoid problems in physics
@@ -354,7 +354,7 @@ c determine above-ground npp for each plant type
 c
           ayanpp(j) = (aleaf(j) + awood(j)) * aynpp(j)
 
-cc          write(100,*)"dynaveg 0",i,j,tauwood0(j),taufin,exist(j)
+c         write(100,*) "dynaveg 0", i, j, tauwood0(j), "taufin", exist(j)
 c
 c determine turnover rates for woody biomass:
 c
@@ -370,7 +370,7 @@ c
           tauroot(j) = 5.0
 c
 c determine litter fall rates
-cc          write(100,*)"dynaveg 1",tauleaf(j),tauroot(j),tauwood(j)
+          write(100,*) "dynaveg 1", tauleaf(j), tauroot(j), tauwood(j)
 c
           falll = falll + cbiol(j) / tauleaf(j)
           fallr = fallr + cbior(j) / tauroot(j)
@@ -399,7 +399,7 @@ c
 
  110    continue
 
-cc	write(100,"(6f10.2)")cbiol(5),cbiol(12),cbiow(5),cbiow(12),cbior(5),cbior(12)
+	write(100,"(6f10.2)")cbiol(5),cbiol(12),cbiow(5),cbiow(12),cbior(5),cbior(12)
 
 c
 c ---------------------------------------------------------------------

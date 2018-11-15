@@ -129,7 +129,7 @@ c
         tgpp(12) = frac(12) * agcl3 * lai(1) * fl * smask
 
 cc        if(iyear.eq.2006)	then
-cc           write(110,"(4I6,5f10.6)")1,iyear,imonth,iday,tgpp(2),agcub, lai(2), fu, frac(2)
+           write(110,"(4I6,5f10.6)")1,iyear,imonth,iday,tgpp(2),agcub, lai(2), fu, frac(2)
 cc	  end if
 c
 c calculate total gridcell gpp
@@ -157,7 +157,7 @@ c
      >               (froot(k,1) + froot(k,2))
  120    continue
 
-cc        write(100,*)"sumnow 2", stemtemp, roottemp
+        write(100,*)"sumnow 2", stemtemp, roottemp
 
 c
 c calculate respiration terms on a 15 degree base
@@ -169,7 +169,7 @@ c
         funca = exp(3500.0 * (1. / 288.16 - 1. / stemtemp))
         funcb = exp(3500.0 * (1. / 288.16 - 1. / roottemp))
 
-cc        write(100,*)"sumnow 2.1"
+        write(100,*)"sumnow 2.1"
 c
 c ---------------------------------------------------------------------
 c * * * calculate instantaneous NPP * * *
@@ -231,7 +231,7 @@ c
      >               rwood * cbiow(5) * sapfrac * funca -
      >               rroot * cbior(5)              * funcb
 
-cc        write(100,*)"sumnow 2.2"
+        write(100,*)"sumnow 2.2"
 
 c
         tnpp(6)  = nppdummy(6)                               -
@@ -250,13 +250,13 @@ c
      >               rwood * cbiow(9)              * funca -
      >               rroot * cbior(9)              * funcb
 
-cc        write(100,*)"sumnow 2.5"
+        write(100,*)"sumnow 2.5"
 c
         tnpp(10) = nppdummy(10)                              -
      >               rwood * cbiow(10)             * funca -
      >               rroot * cbior(10)             * funcb
 c
-cc        write(100,*)"sumnow 2.6"
+        write(100,*)"sumnow 2.6"
 
         tnpp(11) = nppdummy(11)                              -
      >               rroot * cbior(11)            * funcb
@@ -273,7 +273,7 @@ c
           tnpptot = tnpptot + tnpp(k)
  130    continue
 
-cc        write(100,*)"sumnow 3"
+        write(100,*)"sumnow 3"
 
 c
 c ---------------------------------------------------------------------
@@ -310,7 +310,7 @@ c
         a10ancl3 = zweight * a10ancl3 + (1. - zweight) * ancl3
         a10ancl4 = zweight * a10ancl4 + (1. - zweight) * ancl4
 
-cc        write(100,*)"sumnow 4"
+        write(100,*)"sumnow 4"
 
 c
 cc 100  continue
@@ -400,7 +400,7 @@ cc      tconst  = 344.00  ! constant for Lloyd and Taylor (1994) function
 c
       bconst  = 10.0    ! maximum value of decomposition factor
 
-cc	write(100,*)"in sumday1"
+	write(100,*)"in sumday1"
 
 c
 c soil weighting factors
@@ -454,7 +454,7 @@ c
       adgpp(11) = ((ndtimes-1) * adgpp(11) + tgpp(11) * rwork3) * rwork
       adgpp(12) = ((ndtimes-1) * adgpp(12) + tgpp(12) * rwork3) * rwork
 
-cc	write(100,*)"in sumday2", tgpp(8), adgpp(8)
+	write(100,*)"in sumday2", tgpp(8), adgpp(8)
 
 c
 c gross primary production of the entire gridcell
@@ -463,7 +463,7 @@ c
      >           adgpp(7) + adgpp(8) + adgpp(9) + adgpp(10) + adgpp(11) + adgpp(12)
 
 cc      if(iyear.eq.2006)	then
-cc           write(110,"(4I6,3f10.6)")2,iyear,imonth,iday,tgpp(2),adgpp(2), adgpptot
+           write(110,"(4I6,3f10.6)")2,iyear,imonth,iday,tgpp(2),adgpp(2), adgpptot
 cc      end if
 
 c
@@ -564,7 +564,7 @@ c
           soimoisc = soimoisc + wsoi(k)  * 0.5 * (froot(k,1) + froot(k,2))
  120    continue
 
-cc 	write(100,*)"in sumday4"
+ 	write(100,*)"in sumday4"
 
 c
 c calculate daily average soil moisture and soil ice
@@ -659,7 +659,7 @@ c
           moist = exp((wfps - 60.0)**2 / (-800.0))	
         endif
 
-cc		write(100,*)"decompl",moist,factor
+		write(100,*)"decompl",moist,factor
 
 c
 c calculate combined temperature / moisture decomposition factor
@@ -671,8 +671,8 @@ c
         decompl = ((ndtimes-1) * decompl + factor) * rwork
 
 cc	 	if(iyear.eq.2006) then
-cc            write(120,"(3I6,8f10.2)")iyear,imonth,iday, wfps, moist, factor, tsoi(1), decompl, 
-cc     >  		rwork, wisoi(1), wsoi(1)
+            write(120,"(3I6,8f10.2)")iyear,imonth,iday, wfps, moist, factor, tsoi(1), decompl, 
+     >  		rwork, wisoi(1), wsoi(1)
 cc	     end if
 c
 c ---------------------------------------------------------------------
@@ -1024,7 +1024,7 @@ c ---------------------------------------------------------------------
 c * * * update counters and working variables * * *
 c ---------------------------------------------------------------------
 c
-cc      write(100,*)"in sumyear 1"
+      write(100,*)"in sumyear 1"
 c reset sumyear if the first timestep of the year
 c
 cc      if ((istep.eq.1).and.(iday.eq.1).and.(imonth.eq.1)) nytimes = 0
@@ -1157,7 +1157,7 @@ c
         aygpptot = aygpp(1) + aygpp(2) + aygpp(3) + aygpp(4) + aygpp(5)  + aygpp(6)  + 
      >             aygpp(7) + aygpp(8) + aygpp(9) + aygpp(10) + aygpp(11) + aygpp(12)
 
-cc	  write(100,*)imonth,aygpptot,amgpptot
+	  write(100,*)imonth,aygpptot,amgpptot
 c
 c ---------------------------------------------------------------------
 c * * * determine annual npp * * *
@@ -1219,7 +1219,7 @@ c the npp total includes losses from root respiration
 c
         ayneetot  = aynpptot - ayco2mic 
 
-cc	write(100,*)"in sumyear 4"
+	write(100,*)"in sumyear 4"
 c
 c annual average root biomass
 c

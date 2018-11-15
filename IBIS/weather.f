@@ -1116,7 +1116,7 @@ c
   120   continue
 
 cc	  if(iyear.gt.2005) then
-cc           write(110,"(2I6,4f10.2)")iyear,jday,solad(1),solad(2),solai(1),solai(2)
+           write(110,"(2I6,4f10.2)")iyear,jday,solad(1),solad(2),solai(1),solai(2)
 cc	  end if
 c
 c ---------------------------------------------------------------------- 

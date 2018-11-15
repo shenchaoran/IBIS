@@ -181,14 +181,14 @@ c ------------------------------------------------------------------------------
 c
 c leaf litter 
 c
-cc      write(100,*)"bgc 1", rconst,cnr(7)
+      write(100,*)"bgc 1", rconst,cnr(7)
 
        fracll = fmax * (cnleaf**2)/(rconst + cnleaf**2)
        fracls = (1./cnleaf - fracll/cnr(5) - (1.-fracll)/cnr(7))/
      >          (1./cnr(6) - 1./cnr(7))
        fraclm = 1.0 - fracll - fracls
 
-cc      write(100,*)"bgc 1.2"
+      write(100,*)"bgc 1.2"
 c
 c root litter
 c
@@ -197,7 +197,7 @@ c
      >          (1./cnr(6) - 1./cnr(7))
        fracrm = 1.0 - fracrl - fracrs
 
-cc      write(100,*)"bgc 1.3"
+      write(100,*)"bgc 1.3"
 c
 c wood litter
 c
@@ -207,7 +207,7 @@ c
        fracwm = 1.0 - fracwl - fracws
 
 c
-cc      write(100,*)"bgc 1.5"
+      write(100,*)"bgc 1.5"
 c
         rdepth   = 1./(hsoi(1) + hsoi(2) + hsoi(3) + hsoi(4))
         cfrac    = 0.0
@@ -242,7 +242,7 @@ c than 0.17, set fbpom = 0.30 (sandy soil)
 c
          fbpom = 0.50
 
-cc      write(100,*)"bgc 1.6"
+      write(100,*)"bgc 1.6"
 
 c
 c ------------------------------------------------------------------------
@@ -283,9 +283,9 @@ c
      >        clitwm + clitws + csoislop + csoislon +
      >        csoipas + totcmic + clitll + clitrl + clitwl
 
-cc       write(100,"(14f15.4)")totc, clitlm,clitls,clitrm,clitrs,
-cc     >       clitwm, clitws, csoislop, csoislon,
-cc     >       csoipas, totcmic, clitll, clitrl, clitwl
+       write(100,"(14f15.4)")totc, clitlm,clitls,clitrm,clitrs,
+     >       clitwm, clitws, csoislop, csoislon,
+     >       csoipas, totcmic, clitll, clitrl, clitwl
 
 c
 c beginning amount of soil C at each timestep (used for respiration
@@ -318,7 +318,7 @@ c
 c add in the amount of litterfall, and root turnover
 c ---------------------------------------------------------------
 c
-cc      write(100,*)"bgc 2"
+      write(100,*)"bgc 2"
 
        clitlm = clitlm + (fraclm * falll*totts)  
        clitls = clitls + (fracls * falll*totts)  
@@ -398,7 +398,7 @@ c
 
 	
 cc	  if(iyear.gt.2005) then
-cc           write(110,"(3I6,2f10.2)")iyear,imonth,iday,decompl,decomps
+           write(110,"(3I6,2f10.2)")iyear,imonth,iday,decompl,decomps
 cc	  end if
 c
 c ------------------------------------------------------------ 
@@ -411,7 +411,7 @@ c
      >             (1. - fbpom) * (ybn * outcbn +
      >             ybp * outcbp)) - outcnb - outcns
 
-cc      write(100,*)"bgc 3"
+      write(100,*)"bgc 3"
 
 c
 c ------------------------------------------------------------
@@ -466,7 +466,7 @@ c
        cleach = fleach * csoipas + fleach * csoislop +
      >             fleach * csoislon
 
-cc       write(100,"(5f10.2)")texfact, fleach, csoipas, csoislop, csoislon
+       write(100,"(5f10.2)")texfact, fleach, csoipas, csoislop, csoislon
 c
        ynleach = ynleach + fleach * csoipas/cnr(2) +
      >              fleach * csoislop/cnr(3) +
@@ -585,7 +585,7 @@ c
          nbiorm = 0.0
        endif
 c
-cc      write(100,*)"bgc 4"
+      write(100,*)"bgc 4"
 c
 c ----------------------------------------------
 c non-protected organic matter decomposition
@@ -715,7 +715,7 @@ c based on N = .014 Kg/mole -- divide by the number of seconds in daily timestep
 c
             tnmin = tnmin/(86400. * 0.014)
 
-cc      write(100,*)"bgc 5"
+      write(100,*)"bgc 5"
 
 c
 c ---------------------------------------------------
@@ -782,8 +782,8 @@ c
            totfall = falll + fallr + fallw
 
 cc	     if(imonth.eq.40) then
-cc	         write(100,"(3I6,8f10.2)")iyear, imonth, iday, totalit, totrlit, 
-cc     >			 totfall, totcsoi, csoipas, csoislop, totcmic, csoislon 
+	         write(100,"(3I6,8f10.2)")iyear, imonth, iday, totalit, totrlit, 
+     >			 totfall, totcsoi, csoipas, csoislop, totcmic, csoislon 
 cc	     end if
 c
 c nitrogen 
@@ -871,7 +871,7 @@ c calculate daily co2 flux due to microbial decomposition
 c
           tco2mic = totcbegin + totcin - totcend - cleach
 
-cc          write(100,"(5f15.6)") tco2mic, totcbegin, totcin, totcend, cleach
+          write(100,"(5f15.6)") tco2mic, totcbegin, totcin, totcend, cleach
 c
 c convert co2 flux from kg C/day  (seconds in a daily timestep) to mol-C/s
 c based on .012 Kg C/mol
@@ -879,7 +879,7 @@ c
           tco2mic = tco2mic/(86400. * 0.012)
 
 cc	    if(iyear.eq.2006) then
-cc	       write(120,"(3I6,3f10.6)")iyear,imonth,iday,tco2mic,decomps,decompl
+	       write(120,"(3I6,3f10.6)")iyear,imonth,iday,tco2mic,decomps,decompl
 cc	    end if
 	   
 c

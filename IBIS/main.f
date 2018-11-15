@@ -125,8 +125,9 @@ c/****************allocation*********************
         end if
 ! endregion
 
-cc      open(100,file="C:\IBIS\Data\test.txt",action="write")
-cc      open(120,file="D:\South_Drought\input\Photo_test2.txt",action="write")
+      open(100,file="./100.txt",action="write")
+      open(110,file="./110.txt",action="write")
+      open(120,file="./120.txt",action="write")
 c
 c ---------------------------------------------------------------------
 c also take care of calculation of texfact, which is a leaching
@@ -147,7 +148,7 @@ c read(21,*)soiln
         read(21, *)  pft
         read(21, *)  daysum1
         daysum10 = daysum1
-cc	    write(100, "(5f20.2)")   lat,sand0,clay0,soilc,soiln
+	    write(100, "(5f20.2)")   lat,sand0,clay0,soilc,soiln
 
         call constvars  !constant parameters in constvars.f
 
@@ -201,11 +202,11 @@ cc ±ØÐëµÄÒªËØ£ºtav, tmaxv, tminv, rhv, precv, windv, cloudv
 
 	    exist(pft) = 1	   ! fixed pft
 
-cc      write(100,*) "main1"
+      write(100,*) "main1"
 
 	    call initial (isimveg,irestart,sand0,clay0)
 
-cc	    write(100,*) "initial"
+	    write(100,*) "initial"
 c
 c initialize random number generator seed
 c
@@ -322,7 +323,7 @@ c determine the daily vegetation cover characteristics
 c
                         call pheno(iday,laisum,jday)
 
-cc                      write(100,*) iyear, jday, laid
+                      write(100,*) iyear, jday, laid
 
                         tsfactor = min(exp(300 * ((1./(287 - 227.13)) - (1./(adtsoic-227.13)))), 4.0)
 	     		        wsfactor = (1-exp(-6.0*adwsoic))/(1-exp(-6.0))
@@ -333,7 +334,7 @@ cc                      write(100,*) iyear, jday, laid
                         decomps = tsfactor * wsfactor	            ! soil organic matter decomposition factor
 
                         call soilbgc (irun, iyear,iy1,imonth,iday,sand0, clay0)
-cc	                    write(100,*) "soilbgc"
+	                    write(100,*) "soilbgc"
 c
 c determine the length of a precipitation event (between 4 and 24 hours),
 c and time to start and end precipitation event. plen is in timesteps, while
@@ -355,40 +356,40 @@ c
 c determine climatic conditions for the given timestep
 c                  
                             call diurnal (iyear,lat, time, jday, plens, startp, endp, seed)
-cc		                    write(100,*)"diurnal"
+		                    write(100,*)"diurnal"
 
                             call lsxmain(iyear, imonth, iday, pft)
-cc		                    write(100,*)"lsxmain"
+		                    write(100,*)"lsxmain"
 c
 c accumulate some variables every timestep
 c
                             call sumnow(iyear, imonth, iday, istep)
-cc		                    write(100,*)"sumnow"
+		                    write(100,*)"sumnow"
 
                             call sumday (iyear, imonth, iday, istep)
-cc   	                    write(100,*)"sumday"
+   	                    write(100,*)"sumday"
                         end do          ! end of the hourly loop
 c
 c write out daily output
 
 cc****************************Carbon allocation****************************
       	                adnpptot = max(adnpptot, 0.0) 
-cc	                    write(100,*) "adnpptot", adnpptot
+	                    write(100,*) "adnpptot", adnpptot
 c/**********************************************************/
   
                         call sumyear  (imonth, iday)
-cc		                write(100,*) "sumyear"
+		                write(100,*) "sumyear"
                     end do              ! end of the daily loop
 c
-cc                  write(100,*)iyear,imonth,iday,"sumyear over"
+                  write(100,*)iyear,imonth,iday,"sumyear over"
                 end do                  ! end of the monthly loop
 
 c
 c perform vegetation dynamics
 c/**********************************************************/
 
-cc	            write(100,"(5f20.2)") aleaf(pft), awood(pft), aroot(pft), nppsum, leafnppsum
-cc              write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
+	            write(100,"(5f20.2)") aleaf(pft), awood(pft), aroot(pft), nppsum, leafnppsum
+              write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
                 leafnppsum = 0
                 stemnppsum = 0
                 rootnppsum =0
@@ -439,18 +440,18 @@ c
 c set physical soil quantities
 c
       call setsoi
-cc      write(100,*)"start lsx"
+      write(100,*)"start lsx"
 c
 c calculate areal fractions wetted by intercepted h2o
 c
       
       call fwetcal
-cc	write(100,*)"fwetcal over"
+	write(100,*)"fwetcal over"
 c
 c set up for solar calculations
 c
       call solset
-cc	write(100,*)"solset over"
+	write(100,*)"solset over"
 c
 c solar calculations for each waveband
 c
@@ -463,47 +464,47 @@ c to obtain absorbed fluxes sol[u,s,l,g,i] and
 c incident pars sunp[u,l]
 c
         call solsur (ib)
-cc	  write(100,*)"solsur over"
+	  write(100,*)"solsur over"
 
         call solalb (ib)
-cc	  write(100,*)"solalb over"
+	  write(100,*)"solalb over"
 
         call solarf (ib)
-cc	  write(100,*)"solarf over"
+	  write(100,*)"solarf over"
 c
       end do
 c
 c calculate ir fluxes
 c
       call irrad
-cc	write(100,*)"irrad over"
+	write(100,*)"irrad over"
 c
 c step intercepted h2o
 c
       call cascade
-cc	write(100,*)"cascade over"
+	write(100,*)"cascade over"
 c
 c re-calculate wetted fractions, changed by cascade
 c
       call fwetcal
-cc	write(100,*)"fwetcal over"
+	write(100,*)"fwetcal over"
 c
 c step vegetation canopy temperatures implicitly
 c and calculate sensible heat and moisture fluxes
 c
-cc       write(100,*)"canopy over", pft
+       write(100,*)"canopy over", pft
 
       call canopy(iyear, imonth, iday, pft)
 c
 c step intercepted h2o due to evaporation
 c
       call cascad2
-cc	write(100,*)"cascad2 over"
+	write(100,*)"cascad2 over"
 c
 c arbitrarily set veg temps & intercepted h2o for no-veg locations
 c
       call noveg
-cc	write(100,*)"noveg over"
+	write(100,*)"noveg over"
 c
 c set net surface heat fluxes for soil and snow models
 c
@@ -519,12 +520,12 @@ c step snow model
 
 c
       call snow
-cc	write(100,*)"snow over"
+	write(100,*)"snow over"
 c
 c step soil model
 c
       call soilctl
-cc	write(100,*)"soilctl over"
+	write(100,*)"soilctl over"
 c
 c return to main program
 c							   

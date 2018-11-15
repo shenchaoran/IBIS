@@ -97,12 +97,12 @@ cc       data ko15 /2.5e-01/
 	 ko15 = 2.5e-01
 	 alpha3 = 0.060
 
-cc       write(100,*)"stomata_N 5", tau15, gammauc, coefmuc, coefbuc, gsucmin, cimax, kc15, ko15, alpha3
+       write(100,*)"stomata_N 5", tau15, gammauc, coefmuc, coefbuc, gsucmin, cimax, kc15, ko15, alpha3
 c
 c ---------------------------------------------------------------------
 c * * * upper canopy physiology calculations * * *
 c ---------------------------------------------------------------------
-cc        write(100,*)"stomata_N 1", tau15, kc15, ko15, tu, tau, tleaf, ta
+        write(100,*)"stomata_N 1", tau15, kc15, ko15, tu, tau, tleaf, ta
 
         theta3 = 0.970      ! c3 photosynthesis
 
@@ -125,7 +125,7 @@ c upper canopy gamma-star values (mol/mol)
 c
         gamstar = o2conc / (2. * tau)
 
-cc        write(100,*)"stomata_N 2"
+        write(100,*)"stomata_N 2"
 c
 c calculate boundary layer parameters (mol/m**2/s) = su / 0.029 * 1.35
 c
@@ -144,7 +144,7 @@ c constrain ci values to acceptable bounds -- to help ensure numerical stability
 c
         ciuc = max (1.05 * gamstar, min (cimax, ciuc))
 
-cc        write(100,*)"stomata_N 3", gamstar, ko, ciuc
+        write(100,*)"stomata_N 3", gamstar, ko, ciuc
 c
 c ---------------------------------------------------------------------
 c conifer tree physiology 
@@ -168,7 +168,7 @@ c
         jc = vmax * (ciuc - gamstar) / 
      >       (ciuc + kc * (1. + o2conc / ko))
 
-cc        write(100,*)"stomata_N 4"
+        write(100,*)"stomata_N 4"
 c
 c solution to quadratic equation
 c
@@ -209,7 +209,7 @@ c
         ciuc = 0.5 * (ciuc + csuc - 1.6 * anuc / gsuc)
         ciuc = max (1.05 * gamstar, min (cimax, ciuc))
 
-cc        write(100,*)"stomata_N 6"
+        write(100,*)"stomata_N 6"
 c
 c ---------------------------------------------------------------------
 c upper canopy scaling
@@ -231,7 +231,7 @@ c
         gscuc = coefmuc * ancuc * rh12 / cscuc + coefbuc * stresstu
         gscuc = max (gsucmin, coefbuc * stresstu, gscuc)
 
-cc        write(100,*)"stomata_N 7"
+        write(100,*)"stomata_N 7"
 c
 c calculate total canopy and boundary-layer total conductance for 
 c water vapor diffusion
@@ -247,7 +247,7 @@ c
         agcuc = rwork * agcuc
         ancuc = rwork * ancuc
 
-cc	  write(100,*)"stomata_N 8", agcuc, fwetu, aguc, scaleu 
+	  write(100,*)"stomata_N 8", agcuc, fwetu, aguc, scaleu 
 
 c
       return
