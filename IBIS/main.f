@@ -28,7 +28,7 @@ c ---------------------------------------------------------------
 920     format("-----Progress:",I3,"%-----")
 
 	    integer, parameter:: sitesum = 5595 !252	!格点数目总和
-	    integer, parameter:: runsum = 100
+	    integer, parameter:: runsum = 3
 
 
         integer isite, iyear, imonth, j
@@ -265,7 +265,7 @@ c
                 aycsoislon =        0.0
                 aycmic =            0.0 
 
-	            write(*,920) irun		            !检查运行步骤
+	            write(*,920) irun*100/runsum		            !检查运行步骤
 
                 do k = 1, nsoilay
                     wsoi(k) = swilt(k) + (sfield(k) - swilt(k))/2
@@ -402,7 +402,8 @@ c/**********************************************************/
   	            end if									  
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
-	  
+        write(*,920) 100
+
 	    close(21)
 	    close(22)
         close(23)

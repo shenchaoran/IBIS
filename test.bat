@@ -1,2 +1,0 @@
-cd Debug
-IBIS.exe -i=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\input\csv\test.csv -o=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\output\test.txt -s=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\input\txt\test.txt
