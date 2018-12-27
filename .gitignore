@@ -1,6 +1,6 @@
 /build
 /Debug
-/Release
+/Release/
 .vscode/settings.json
 IBIS/vc100.pdb
 IBIS.suo
@@ -9,3 +9,5 @@ bat/met.csv
 bat/output.txt
 bat/test.bat
 bat/test.bat
+IBIS.suo
+IBIS/vc100.pdb
