@@ -23,12 +23,11 @@ c ---------------------------------------------------------------
         integer argc, argcI, filePathStart
         character(len=10):: fileTag
         character(len=100):: tempStr
-        character(len=100), dimension(3):: argvs
+        character(len=100), dimension(10):: argvs
 377     format("-----this is an error identification-----",/, a)
 920     format("-----Progress:",I3,"%-----")
 
-	    integer, parameter:: sitesum = 5595 !252	!¸ñµãÊýÄ¿×ÜºÍ
-	    integer, parameter:: runsum = 3
+	    integer runsum
 
 
         integer isite, iyear, imonth, j
@@ -36,7 +35,7 @@ c ---------------------------------------------------------------
 	    integer yearnum, daysum1, irun,	daysum10
 	    real year, jd, id
 	    real rgd, gppv(3600), resv(3600), neev(3600), lev(3600), hv(3600) 
-	    real  gppdobs(3600),resdobs(3600),needobs(3600),ledobs(3600),hdobs(3600),laiobs(3600)
+	    real gppdobs(3600),resdobs(3600),needobs(3600),ledobs(3600),hdobs(3600),laiobs(3600)
 	    real gppobs, reobs, neeobs, leobs, tsfactor, wsfactor
 
         integer istep,           ! timestep counter (per day)
@@ -81,7 +80,7 @@ c/****************allocation*********************
 
         real ran2                               ! Function : random number generator
         data ndaypm /31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31/
-	    character (len=80)::metFile, outfile, siteFile
+	    character (len=80)::metFile, dailyOutFile, annualOutFile, siteFile, statFile, spinup
 	    character (len=6) :: site
         irestart = 0                            ! irestart   0: not a restart run  1: restart run
         soilcspin = 1                           ! soilcspin  0: no soil spinup, 1: acceleration procedure used 
@@ -93,8 +92,9 @@ c/****************allocation*********************
         niter = int (86400.0 / dtime)           !24 hours
 
 ! region argv scr
+        runsum = 100
         argc = iargc()
-        if(argc /= 3) then
+        if(argc < 3) then
             print 377, 'invalid argc number, you must input 3 argc'
             stop
         end if
@@ -109,32 +109,35 @@ c/****************allocation*********************
             end if
           
             fileTag = trim(tempStr(:filePathStart))
-            if(fileTag == '--input=' .or. fileTag == '-i=') then
+            if(fileTag == '--met=') then
                 metFile = tempStr(filePathStart+1:)
-            elseif(fileTag == '--output=' .or. fileTag == '-o=') then
-                outfile = tempStr(filePathStart+1:)
-            elseif(fileTag == '--site=' .or. fileTag == '-s=') then
+            elseif(fileTag == '--site=') then
                 siteFile = tempStr(filePathStart+1:)
+            elseif(fileTag == '--do=') then
+                dailyOutFile = tempStr(filePathStart+1:)
+            elseif(fileTag == '--ao=') then
+                annualOutFile = tempStr(filePathStart+1:)
+            elseif(fileTag == '--stat=') then
+                statFile = tempStr(filePathStart+1:)
+            elseif(fileTag == '--spinup=') then
+                spinup = tempStr(filePathStart+1:)
+                read(spinup, *) runsum
             end if
             print *,tempStr
         end do
       
-        if(len_trim(siteFile) == 0 .or. len_trim(metFile) == 0 .or. len_trim(outfile) == 0 ) then
+        if(len_trim(siteFile) == 0 .or. len_trim(metFile) == 0 .or. len_trim(annualOutFile) == 0) then
             print 377, 'invalid input file!'
             stop
         end if
 ! endregion
 
-cc      open(100,file="C:\IBIS\Data\test.txt",action="write")
-cc      open(120,file="D:\South_Drought\input\Photo_test2.txt",action="write")
 c
 c ---------------------------------------------------------------------
 c also take care of calculation of texfact, which is a leaching
 c parameter based on the average sand fraction of the top 1 m of
 c soil
 c ---------------------------------------------------------------------
-
-	    !do isite= 1, sitesum
 		
 	    open(21, file=siteFile,action="read")           
         read(21, *)  lat
@@ -142,12 +145,11 @@ c ---------------------------------------------------------------------
         read(21, *)  clay0
 c read(21,*)soilc   
 c read(21,*)soiln   
-        read(21, *)  iy1
-        read(21, *)  yearnum
-        read(21, *)  pft
-        read(21, *)  daysum1
+        read(21, *)  iy1            ! èµ·ï¿½?ï¿½å¹´ï¿½? 
+        read(21, *)  yearnum        ! è¿ï¿½?ï¿½æ€»å¹´ï¿½?
+        read(21, *)  pft            ! æ¤ï¿½??ç±»åž‹  12ç±»å·¦ï¿½?          å…¨çƒæ¤ï¿½??ç±»åž‹ï¿½?
+        read(21, *)  daysum1        ! 
         daysum10 = daysum1
-cc	    write(100, "(5f20.2)")   lat,sand0,clay0,soilc,soiln
 
         call constvars  !constant parameters in constvars.f
 
@@ -161,10 +163,10 @@ cc	    write(100, "(5f20.2)")   lat,sand0,clay0,soilc,soiln
 	        pft = 12
 	    end if	    
 
-	    open(22, file=metFile,action="read")
-	    open(23, file=outfile,action="write")
-
-cc	    write(23,*)"run year day gppsim nppsim co2mic neesim lai gppobs reobs neeobs leobs"
+	    open(22, file=metFile, action="read")
+	    open(23, file=dailyOutFile, action="write")
+        open(24, file=annualOutFile, action="write")
+        open(25, file=statFile, action="write")
 
 	    !read(22,*)	! read the first line
 
@@ -172,8 +174,6 @@ cc	    write(23,*)"run year day gppsim nppsim co2mic neesim lai gppobs reobs nee
 	        read(22,*) site, lat, year, jd, id, tav(idayy), tmaxv(idayy), tminv(idayy), 
      >		         rhv(idayy), precv(idayy), windv(idayy), cloudv(idayy)
 	    end do 
-
-cc ±ØÐëµÄÒªËØ£ºtav, tmaxv, tminv, rhv, precv, windv, cloudv
 
 	    clitlm =        0.0
         clitls =        0.0
@@ -265,7 +265,7 @@ c
                 aycsoislon =        0.0
                 aycmic =            0.0 
 
-	            write(*,920) irun*100/runsum		            !¼ì²éÔËÐÐ²½Öè
+	            write(*,920) irun*100/runsum		            !ÃŠÃ¤Â³Ã¶Ã”Ã‹ÃÃÂ½Ã¸Â¶Ãˆ
 
                 do k = 1, nsoilay
                     wsoi(k) = swilt(k) + (sfield(k) - swilt(k))/2
@@ -375,7 +375,13 @@ cc****************************Carbon allocation****************************
       	                adnpptot = max(adnpptot, 0.0) 
 cc	                    write(100,*) "adnpptot", adnpptot
 c/**********************************************************/
-  
+
+                        if(irun.eq.runsum) then
+                            ! daily output
+                            write(23, "(3I8,6f15.8)") iyear, imonth, iday, adgpptot*1000, adnpptot*1000, adneetot*1000
+c    >                          adco2ratio, adaet, adtrunoff
+                        end if
+
                         call sumyear  (imonth, iday)
 cc		                write(100,*) "sumyear"
                     end do              ! end of the daily loop
@@ -387,8 +393,6 @@ c
 c perform vegetation dynamics
 c/**********************************************************/
 
-cc	            write(100,"(5f20.2)") aleaf(pft), awood(pft), aroot(pft), nppsum, leafnppsum
-cc              write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
                 leafnppsum = 0
                 stemnppsum = 0
                 rootnppsum =0
@@ -397,11 +401,17 @@ cc              write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
                 lai(2) = 0
 c/**********************************************************/
                 if (isimveg.ne.0) call dynaveg (iyear, isimfire)	 
-                if(irun.eq.runsum) then           
-		            write(23,"(I6,5f13.8)") iyear,falll,fallw,aylail,aylaiu,ayco2mic
-  	            end if									  
+                if(irun.eq.runsum) then
+                    ! annual output
+		            write(24,"(I8,10f15.8)") iyear, aygpptot*1000, aynpptot*1000, ayneetot*1000
+c    >                    ayaet, aytrunoff, falll, fallr, fallw, aylail, aylaiu
+  	            end if
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
+        
+        ! state output
+        write(25, "(3f15.8)") csoislon, csoipas, totcmic
+        
         write(*,920) 100
 
 	    close(21)

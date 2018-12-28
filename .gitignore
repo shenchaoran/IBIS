@@ -11,3 +11,5 @@ bat/test.bat
 bat/test.bat
 IBIS.suo
 IBIS/vc100.pdb
+/bat
+/bat/**
