@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<VisualStudioUserFile ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A2B0829B-412A-4B13-969D-198949F4F468}">
-	<Configurations>
-		<Configuration Name="Debug|Win32" CommandArguments="--spinup=3 --met=..\bat\met.csv --site=..\bat\site.txt --ao=..\bat\annual_output.txt --do=..\bat\daily_output.txt --stat=..\bat\state.txt"/>
-		<Configuration Name="Release|Win32"/></Configurations></VisualStudioUserFile>
