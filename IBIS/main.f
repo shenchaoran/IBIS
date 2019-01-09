@@ -378,8 +378,8 @@ c/**********************************************************/
 
                         if(irun.eq.runsum) then
                             ! daily output
-                            write(23, "(3I8,6f15.8)") iyear, imonth, iday, adgpptot*1000, adnpptot*1000, adneetot*1000
-c    >                          adco2ratio, adaet, adtrunoff
+                            write(23, "(I8, 4X, I8, 4X, I8, 4X, f15.8,4X, f15.8, 4X, f15.8, 4X)") iyear, imonth, iday, 
+     >                            adgpptot*1000, adnpptot*1000, adneetot*1000
                         end if
 
                         call sumyear  (imonth, iday)
@@ -403,14 +403,14 @@ c/**********************************************************/
                 if (isimveg.ne.0) call dynaveg (iyear, isimfire)	 
                 if(irun.eq.runsum) then
                     ! annual output
-		            write(24,"(I8,10f15.8)") iyear, aygpptot*1000, aynpptot*1000, ayneetot*1000
+		            write(24,"(I8,4X,f15.8,4X,f15.8,4X,f15.8,4X)") iyear, aygpptot*1000, aynpptot*1000, ayneetot*1000
 c    >                    ayaet, aytrunoff, falll, fallr, fallw, aylail, aylaiu
   	            end if
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
         
         ! state output
-        write(25, "(3f15.8)") csoislon, csoipas, totcmic
+        write(25, "(f15.8, 4X, f15.8, 4X, f15.8, 4X)") csoislon, csoipas, totcmic
         
         write(*,920) 100
 
