@@ -377,11 +377,12 @@ cc	                    write(100,*) "adnpptot", adnpptot
 c/**********************************************************/
 
                         if(irun.eq.runsum) then
-                            ! daily output
-                            write(23, "(I8, 4X, I8, 4X, I8, 4X, f15.8,4X, f15.8, 4X, f15.8, 4X)") 
-                            iyear, imonth, iday, 
-     >  adgpptot*1000, adnpptot*1000, adneetot*1000,
-     >  adtrunoff, adsrunoff,
+c daily output
+                            write(23, "(3I8, 7(f15.8,4X))") 
+     >  iyear, imonth, iday, 
+     >  adgpptot*1000, adnpptot*1000, adneetot*1000,                            ! 总初级生产力 净初级生产力 净生态系统生产力
+     >  adtrunoff, adsrunoff, adaet,                                            ! 总径流 地表径流 蒸散发
+     >  adco2ratio,                                                             ! 生态系统呼吸
                         end if
 
                         call sumyear  (imonth, iday)
@@ -390,7 +391,6 @@ cc		                write(100,*) "sumyear"
                     
 cc	      write(100,"(5f20.2)") aleaf(pft), awood(pft), aroot(pft), nppsum, leafnppsum
 cc            write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
-c
 cc                  write(100,*)iyear,imonth,iday,"sumyear over"
                 end do                  ! end of the monthly loop
 
@@ -405,25 +405,28 @@ c/**********************************************************/
                 lai(1) = 0
                 lai(2) = 0
 c/**********************************************************/
+c annual output
                 if (isimveg.ne.0) call dynaveg (iyear, isimfire)	 
-                if(irun.eq.runsum) then                                             ! annual output
+c               if(irun.eq.runsum) then                                             
 c		            write(24,"(I8,4X,f15.8,4X,f15.8,4X,f15.8,4X)") iyear, 
 c     >  aygpptot*1000, aynpptot*1000, ayneetot*1000,
-c     >  falll, fallr, fallw, aylail, aylaiu, ayco2mic,
-c     >  ayaet, 
-c     >  aytrunoff, aysrunoff,
+c     >  aytrunoff, aysrunoff, ayaet, 
+c     >  aylail, aylaiu, ayco2mic,
+c     >  falll, fallr, fallw, 
 c     >  biomass(pft), cbiol(pft), cbiow(pft), cbior(pft),
 
-                    write(24,"(I6,15f20.2)")iyear,aygpptot*1000,aynpptot*1000,
-      >  ayneetot*1000, ayco2mic*1000,ayaet,ayinvap,aytrans,aysuvap,aycsoi,
-      >  aycmic,aynsoi,biomass(pft), cbiol(pft), cbiow(pft), cbior(pft)
+                    write(24,"(I6, 15(f20.2, 4X))")
+      >  iyear,
+      >  aygpptot*1000, aynpptot*1000, ayneetot*1000, 
+      >  ayco2mic*1000, ayaet, ayinvap, aytrans, aysuvap, aycsoi,
+      >  aycmic, aynsoi, biomass(pft), cbiol(pft), cbiow(pft), cbior(pft)
 
   	            end if
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
         
-        ! state output
-        write(25, "(f15.8, 4X, f15.8, 4X, f15.8, 4X)") csoislon, csoipas, totcmic
+c state output
+        write(25, "(8f15.8)") csoislon, csoipas, totcmic, totbiol, totbiou, totlaiu, totlail, vegtype0
         
         write(*,920) 100
 
