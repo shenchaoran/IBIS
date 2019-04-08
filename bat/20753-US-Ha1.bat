@@ -1,0 +1,2 @@
+cd ..\Debug
+.\IBIS.exe --met=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\input\csv\20753_proced.csv --site=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\input\txt\20753.txt --ao=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\outputs\20753.annual.txt --do=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\outputs\20753.daily.txt --stat=E:\Data\IBIS_Data\5b9012e4c29ca433443dcfab\outputs\20753.state.txt --spinup=1

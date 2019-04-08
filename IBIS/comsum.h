@@ -124,7 +124,7 @@ c annual average fields
 c
       real
      >  ayprcp,       ! annual average precipitation (mm/yr)
-     >  ayaet,        ! annual average aet (mm/yr)
+     >  ayaet,        ! annual average aet (mm/yr)      aet actual evapotranspiration: 实际蒸散发
      >  aytrans,      ! annual average transpiration (mm/yr)
      >	ayinvap,
      >  aysuvap,

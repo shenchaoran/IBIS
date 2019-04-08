@@ -55,8 +55,8 @@ c
 cc define middle variables
       real rhd, dran, lat, sand0, clay0
 	real soilc, soiln, lon, laid, sun, m, lod
-	real tav(19360), tmaxv(19360),tminv(19360), rhv(19360),laiv(3600)
-	real cloudv(19360), precv(19360), windv(19360), psurfv(3600), sunv(3600),rnwjv(19360)
+	real tav(11680), tmaxv(11680),tminv(11680), rhv(11680),laiv(3600)
+	real cloudv(11680), precv(11680), windv(11680), psurfv(3600), sunv(3600),rnwjv(11680)
 	integer row, col, pft, ifpt, idayy, dayy, k, dayy0, jday0,istep0,laimaxjd,flag0
 	integer	cadayid,castep
 

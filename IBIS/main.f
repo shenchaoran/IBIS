@@ -61,8 +61,8 @@ c ---------------------------------------------------------------
 cc define middle variables
         real rhd, dran, lat, sand0, clay0
 	    real soilc, soiln, lon, laid, sun, m, lod
-	    real tav(19360), tmaxv(19360),tminv(19360), rhv(19360),laiv(3600)
-	    real cloudv(19360), precv(19360), windv(19360), psurfv(3600), sunv(3600),rnwjv(19360)
+	    real tav(11680), tmaxv(11680),tminv(11680), rhv(11680),laiv(3600)
+	    real cloudv(11680), precv(11680), windv(11680), psurfv(3600), sunv(3600),rnwjv(11680)
 	    integer row, col, pft, ifpt, idayy, dayy, k, dayy0, jday0,istep0,laimaxjd,flag0
 	    integer	cadayid,castep
 
@@ -145,10 +145,10 @@ c ---------------------------------------------------------------------
         read(21, *)  clay0
 c read(21,*)soilc   
 c read(21,*)soiln   
-        read(21, *)  iy1            ! 起�?�年�? 
-        read(21, *)  yearnum        ! 运�?�总年�?
-        read(21, *)  pft            ! 植�??类型  12类左�?          全球植�??类型�?
-        read(21, *)  daysum1        ! 
+        read(21, *)  iy1                                                            ! 起始年份 
+        read(21, *)  yearnum                                                        ! 运行总年份
+        read(21, *)  pft            
+        read(21, *)  daysum1        
         daysum10 = daysum1
 
         call constvars  !constant parameters in constvars.f
@@ -199,7 +199,7 @@ c read(21,*)soiln
 		    cbior(ifpt) = 0.0
 	    end do
 
-	    exist(pft) = 1	   ! fixed pft
+	    exist(pft) = 1	                                                            ! fixed pft
 
 cc      write(100,*) "main1"
 
@@ -219,7 +219,7 @@ c
             dayy = 0
             dayy0 =0
 
-            do iyear = iy1, iy2                 ! start of yearly loop
+            do iyear = iy1, iy2                                                     ! start of yearly loop
                 tcthis = 100
                 twthis = -100
                 gdd0this = 0.0
@@ -265,7 +265,7 @@ c
                 aycsoislon =        0.0
                 aycmic =            0.0 
 
-	            write(*,920) irun*100/runsum		            !Êä³öÔËÐÐ½ø¶È
+	            write(*,920) irun*100/runsum		            
 
                 do k = 1, nsoilay
                     wsoi(k) = swilt(k) + (sfield(k) - swilt(k))/2
@@ -283,13 +283,13 @@ c
                     end if
                 end if
 
-                jday =                  0	                    ! reset julian date
+                jday =                  0	                                        ! reset julian date
                 jday0 =                 0           
                 laimaxjd =              200         
                 laisum =                0.51            
 
-                do imonth = 1, 12                               ! start of monthly loop
-                    do iday = 1, ndaypm(imonth)                 ! start of daily loop
+                do imonth = 1, 12                                                   ! start of monthly loop
+                    do iday = 1, ndaypm(imonth)                                     ! start of daily loop
                         dayy = dayy + 1
                         if(dayy.gt.daysum1) then
                             dayy = 1
@@ -329,8 +329,8 @@ cc                      write(100,*) iyear, jday, laid
                         ! adtsoic:  daily average soil temperature (c) using profile weighting
                         ! adwsoic: daily average soil moisture using root profile weighting (fraction)
 
-                        decompl = tsfactor * wsfactor	            ! litter decomposition factor
-                        decomps = tsfactor * wsfactor	            ! soil organic matter decomposition factor
+                        decompl = tsfactor * wsfactor	                            ! litter decomposition factor
+                        decomps = tsfactor * wsfactor	                            ! soil organic matter decomposition factor
 
                         call soilbgc (irun, iyear,iy1,imonth,iday,sand0, clay0)
 cc	                    write(100,*) "soilbgc"
@@ -346,11 +346,11 @@ c
                         startp  = dtime * min (niter-plen, int(ran2(seed)*(niter-plen+1)))
                         endp    = startp + plens
                         
-                        do istep = 1, niter             ! start of hourly loop, niter=24
+                        do istep = 1, niter                                         ! start of hourly loop, niter=24
 c
 c calculate the time of day since midnight (in seconds)
 c
-                            time = (istep - 1) * dtime  !dtime = 3600. ,  time step in secondscc 
+                            time = (istep - 1) * dtime                              !dtime = 3600. ,  time step in secondscc 
 c
 c determine climatic conditions for the given timestep
 c                  
@@ -367,7 +367,7 @@ cc		                    write(100,*)"sumnow"
 
                             call sumday (iyear, imonth, iday, istep)
 cc   	                    write(100,*)"sumday"
-                        end do          ! end of the hourly loop
+                        end do                                                      ! end of the hourly loop
 c
 c write out daily output
 
@@ -378,13 +378,18 @@ c/**********************************************************/
 
                         if(irun.eq.runsum) then
                             ! daily output
-                            write(23, "(I8, 4X, I8, 4X, I8, 4X, f15.8,4X, f15.8, 4X, f15.8, 4X)") iyear, imonth, iday, 
-     >                            adgpptot*1000, adnpptot*1000, adneetot*1000
+                            write(23, "(I8, 4X, I8, 4X, I8, 4X, f15.8,4X, f15.8, 4X, f15.8, 4X)") 
+                            iyear, imonth, iday, 
+     >  adgpptot*1000, adnpptot*1000, adneetot*1000,
+     >  adtrunoff, adsrunoff,
                         end if
 
                         call sumyear  (imonth, iday)
 cc		                write(100,*) "sumyear"
                     end do              ! end of the daily loop
+                    
+cc	      write(100,"(5f20.2)") aleaf(pft), awood(pft), aroot(pft), nppsum, leafnppsum
+cc            write(100,*)aleaf(pft), awood(pft), aroot(pft), nppsum
 c
 cc                  write(100,*)iyear,imonth,iday,"sumyear over"
                 end do                  ! end of the monthly loop
@@ -401,10 +406,18 @@ c/**********************************************************/
                 lai(2) = 0
 c/**********************************************************/
                 if (isimveg.ne.0) call dynaveg (iyear, isimfire)	 
-                if(irun.eq.runsum) then
-                    ! annual output
-		            write(24,"(I8,4X,f15.8,4X,f15.8,4X,f15.8,4X)") iyear, aygpptot*1000, aynpptot*1000, ayneetot*1000
-c    >                    ayaet, aytrunoff, falll, fallr, fallw, aylail, aylaiu
+                if(irun.eq.runsum) then                                             ! annual output
+c		            write(24,"(I8,4X,f15.8,4X,f15.8,4X,f15.8,4X)") iyear, 
+c     >  aygpptot*1000, aynpptot*1000, ayneetot*1000,
+c     >  falll, fallr, fallw, aylail, aylaiu, ayco2mic,
+c     >  ayaet, 
+c     >  aytrunoff, aysrunoff,
+c     >  biomass(pft), cbiol(pft), cbiow(pft), cbior(pft),
+
+                    write(24,"(I6,15f20.2)")iyear,aygpptot*1000,aynpptot*1000,
+      >  ayneetot*1000, ayco2mic*1000,ayaet,ayinvap,aytrans,aysuvap,aycsoi,
+      >  aycmic,aynsoi,biomass(pft), cbiol(pft), cbiow(pft), cbior(pft)
+
   	            end if
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
@@ -422,7 +435,6 @@ c
 c end of the simulation
 c
 cc      return
-        !pause
         end
 c
 c

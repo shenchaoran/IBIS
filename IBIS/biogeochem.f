@@ -224,6 +224,7 @@ c
 c
         cfrac   = cfrac   * rdepth
         texfact = texfact * rdepth
+
 c
 c ---------------------------------------------------------------------
 c fraction of decomposing microbial biomass into protected organic

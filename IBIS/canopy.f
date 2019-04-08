@@ -1304,11 +1304,9 @@ c
       do 600 k = 1, nsoilay
 cc        do 610 i = 1, npoi
 c
-          upsoiu(k) = fvaput * 2.0 * lai(2) * fu *
-     >                  stressu(k) / max (stresstu, epsilon)
+          upsoiu(k) = fvaput * 2.0 * lai(2) * fu *stressu(k) / max (stresstu, epsilon)
 c
-          upsoil(k) = fvaplt * 2.0 * lai(1) * fl *
-     >                  (1. - fi) *
+          upsoil(k) = fvaplt * 2.0 * lai(1) * fl *(1. - fi) *
      >                  stressl(k) / max (stresstl, epsilon)
 c
 cc 610    continue
