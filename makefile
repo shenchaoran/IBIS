@@ -1,5 +1,7 @@
-COMPILER = gfortran
-F77_OPTIONS = -g -o0 -C -ffixed-line-length-132 -funroll-loops
+export FC = gfortran -fPIC
+COMPILER = $(FC)
+# F77_OPTIONS = -g -o0 -C -ffixed-line-length-132 -funroll-loops
+F77_OPTIONS = -O3 -C -ffixed-line-length-132 -funroll-loops -ffast-math
 INCLUDE_DIRS  = -I/usr/local/include
 LD_OPTIONS_NETCDF  = /usr/local/lib/libnetcdff.so
 
@@ -18,6 +20,7 @@ $(EXENAME): $(OBJS) $(HEADERS)
 	$(COMPILER) $(OBJS) $(F77_OPTIONS) $(INCLUDE_DIRS) $(LD_OPTIONS_NETCDF) -o $(DPATH)/$(EXENAME)
 
 $(OBJS): $(OBJPATH)/%.o: $(SPATH)/%.f $(HEADERS)
+	@echo $FC
 	@mkdir -p $(OBJPATH)
 	$(COMPILER) $(F77_OPTIONS) $(INCLUDE_DIRS) -c $< -o $@
 

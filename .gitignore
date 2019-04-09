@@ -9,3 +9,8 @@ IBIS/vc100.pdb
 bat/annual_output.txt
 bat/daily_output.txt
 bat/state.txt
+.project
+.cproject
+bat/output_daily.csv
+bat/output_annual.csv
+bat/output_state.txt

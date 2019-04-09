@@ -125,7 +125,7 @@ c/****************allocation*********************
             end if
             print *,tempStr
         end do
-      
+
         if(len_trim(siteFile) == 0 .or. len_trim(metFile) == 0 .or. len_trim(annualOutFile) == 0) then
             print 377, 'invalid input file!'
             stop
@@ -218,7 +218,6 @@ c initialize this year's values of gdd0, gdd5, tc, tw
 c
             dayy = 0
             dayy0 =0
-
             do iyear = iy1, iy2                                                     ! start of yearly loop
                 tcthis = 100
                 twthis = -100
@@ -263,9 +262,7 @@ c
                 aycsoipas =         0.0	
                 aycsoislop =        0.0
                 aycsoislon =        0.0
-                aycmic =            0.0 
-
-	            write(*,920) irun*100/runsum		            
+                aycmic =            0.0 		            
 
                 do k = 1, nsoilay
                     wsoi(k) = swilt(k) + (sfield(k) - swilt(k))/2
@@ -376,13 +373,17 @@ cc****************************Carbon allocation****************************
 cc	                    write(100,*) "adnpptot", adnpptot
 c/**********************************************************/
 
-                        if(irun.eq.runsum) then
 c daily output
-                            write(23, "(3I8, 7(f15.8,4X))") 
+                        if(irun.eq.runsum) then
+                            write(23, "(3I8, 27(4X, f15.8))")
      >  iyear, imonth, iday, 
-     >  adgpptot*1000, adnpptot*1000, adneetot*1000,                            ! 总初级生产力 净初级生产力 净生态系统生产力
-     >  adtrunoff, adsrunoff, adaet,                                            ! 总径流 地表径流 蒸散发
-     >  adco2ratio,                                                             ! 生态系统呼吸
+     >  adrain, adsnow, adaet, adtrans, 
+     >  adinvap, adsuvap, adtrunoff, adsrunoff, 
+     >  addrainage, adrh, adsnod, adsnof, 
+     >  adwsoi, adwisoi, adtsoi, adwsoic, 
+     >  adtsoic, adco2mic, adco2root, adco2soi, 
+     >  adco2ratio, adnmintot, adtlaysoi, adwlaysoi, 
+     >  adneetot*1000, adgpptot*1000, adnpptot*1000
                         end if
 
                         call sumyear  (imonth, iday)
@@ -407,26 +408,29 @@ c/**********************************************************/
 c/**********************************************************/
 c annual output
                 if (isimveg.ne.0) call dynaveg (iyear, isimfire)	 
-c               if(irun.eq.runsum) then                                             
-c		            write(24,"(I8,4X,f15.8,4X,f15.8,4X,f15.8,4X)") iyear, 
-c     >  aygpptot*1000, aynpptot*1000, ayneetot*1000,
-c     >  aytrunoff, aysrunoff, ayaet, 
-c     >  aylail, aylaiu, ayco2mic,
-c     >  falll, fallr, fallw, 
-c     >  biomass(pft), cbiol(pft), cbiow(pft), cbior(pft),
-
-                    write(24,"(I6, 15(f20.2, 4X))")
-      >  iyear,
-      >  aygpptot*1000, aynpptot*1000, ayneetot*1000, 
-      >  ayco2mic*1000, ayaet, ayinvap, aytrans, aysuvap, aycsoi,
-      >  aycmic, aynsoi, biomass(pft), cbiol(pft), cbiow(pft), cbior(pft)
+                if(irun.eq.runsum) then
+		            write(24,"(I8,4X, 51(f15.8, 4X))")  iyear, 
+     >  ayprcp, ayaet, aytrans, ayinvap, 
+     >  aysuvap, aytrunoff, aysrunoff, aydrainage, 
+     >  aydwtot, aywsoi, aywisoi, ayvwc, 
+     >  ayawc, aytsoi, ayrratio, aytratio, 
+     >  aysolar, ayalbedo, ayirdown, ayirup, 
+     >  aysens, aylatent, aystresstu, aystresstl,
+     >  ayanpptot, aynpptot, aygpptot, ayalit, 
+     >  ayblit, aycsoi, aycmic, ayanlit, 
+     >  aybnlit, aynsoi, ynleach, ayneetot, 
+     >  ayco2mic, ayco2root, ayco2soi, aynmintot, 
+     >  ayrootbio, ayclitlm,
+     >  falll, fallr, fallw, aylail, aylaiu,
+     >  biomass(pft), cbiol(pft), cbiow(pft), cbior(pft)
 
   	            end if
+                write(*,920) ((iyear - iy1) + yearnum * (irun-1)) *100 / yearnum / runsum 
             end do              ! end of year loop
         end do                  ! end of spin-up loop	
         
 c state output
-        write(25, "(8f15.8)") csoislon, csoipas, totcmic, totbiol, totbiou, totlaiu, totlail, vegtype0
+        write(25, "(8(f15.8, /))") csoislon, csoipas, totcmic, totbiol, totbiou, totlaiu, totlail, vegtype0
         
         write(*,920) 100
 
